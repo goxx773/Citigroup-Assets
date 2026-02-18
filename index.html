@@ -4,7 +4,15 @@
   <meta charset="UTF-8">
   <title>AI Interview Portal</title>
   <style>
-    body {
+    <script>
+window.addEventListener("message", function(event) {
+  if (!isNaN(event.data)) {
+    document.getElementById("interviewFrame").style.height =
+      event.data + "px";
+  }
+});
+</script>
+body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f4f6f8;
@@ -36,7 +44,19 @@
     <h1>AI Interview Portal</h1>
   </header>
 
-  <iframe src="https://script.google.com/macros/library/d/1cvDsnYU9KOBpL5i5csOGBWyciJIq4gjBcADrIvHRztiyUlNZH8bT4nYy/15"></iframe>
+  <iframe id="interviewFrame"
+        src="https://script.google.com/macros/s/AKfycbzcEq7rJ_3KiRK1VbTTgPsFrrszWrqlu5mJBdvOvJDQkK8cX3nvKRGSKaOffLQ7WzSC/exec"
+        style="width:100%; border:none;">
+</iframe>
+<footer style="
+  text-align:center;
+  padding:20px;
+  font-size:12px;
+  color:#666;
+  background:#f4f6f8;">
+  © 2026 Citigroup Inc.<br>
+  Confidential – Candidate Assessment Portal
+</footer>
 
 </body>
 </html>
