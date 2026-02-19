@@ -51,4 +51,15 @@ footer {
   Confidential – Candidate Assessment Portal
 </footer>
 
+
+<script>
+  window.addEventListener("message", function(event) {
+    if (!isNaN(event.data)) {
+      document.getElementById("interviewFrame").style.height =
+        event.data + "px";
+    }
+  });
+</script>
+
 </body>
+</html>
