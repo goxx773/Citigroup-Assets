@@ -1,65 +1,157 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>AI Interview Portal</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-    }
-    header {
-      background: #2563eb;
-      padding: 20px;
-      color: white;
-      text-align: center;
-    }
-    header img {
-      max-height: 50px;
-      vertical-align: middle;
-    }
-    h1 {
-      margin: 10px 0 0 0;
-      font-size: 20px;
-    }
-    iframe {
-      width: 100%;
-      height: 90vh;
-      border: none;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-footer {
-      text-align:center;
-      padding:20px;
-      font-size:12px;
-      color:#666;
-      background:#f4f6f8;
-    }
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: Arial, sans-serif;
+}
 
-  </style>
+.container {
+  background: white;
+  width: 100%;
+  max-width: 520px;
+  padding: 40px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+/* Example inputs/buttons styling */
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+button {
+  background: #c8102e;
+  color: white;
+  border: none;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #a50d26;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <img src="https://raw.githubusercontent.com/goxx773/Citigroup-Assets/e1d215beb179331652c11fb23000f6937bdedad5/Image%203.jpeg" alt="Company Logo">
-  </header>
+<div class="container">
 
-  <iframe src="https://script.google.com/macros/s/AKfycbzuTcjM5bkDUo-h2LSWM6hYpTcEX-___AA8jvF713o2MpRMCOW50OOMQB-8WVvqhv-g/exec"></iframe>
+  <h2 style="margin-bottom: 25px; color: #c8102e;">
+    Candidate Interview Portal
+  </h2>
 
-<footer>
-  © 2026 Citigroup Inc.<br>
-  Confidential – Candidate Assessment Portal
-</footer>
+  <!-- Form inputs -->
+  <input type="text" id="name" placeholder="Full Name">
+  <input type="email" id="email" placeholder="Email Address">
+  <input type="text" id="role" placeholder="Role Applied For">
 
+  <button id="startBtn" onclick="begin()">Start Interview</button>
+
+  <div id="interview" style="display:none; margin-top:20px;">
+    <div id="progress" style="margin-bottom:8px; font-size:14px; color:#666;"></div>
+    <div id="question"></div>
+    <textarea id="answer" rows="4" placeholder="Type your answer..."></textarea>
+    <button id="nextBtn" onclick="submitAnswer()">Next Question</button>
+    <button onclick="finish()">Finish Interview</button>
+  </div>
+
+</div>
 
 <script>
-  window.addEventListener("message", function(event) {
-    if (!isNaN(event.data)) {
-      document.getElementById("interviewFrame").style.height =
-        event.data + "px";
-    }
-  });
-</script>
+// Auto-resize to parent
+function resizeIframe() {
+  window.parent.postMessage(
+    document.documentElement.scrollHeight,
+    "*"
+  );
+}
 
+// Example placeholder logic for interview (replace with Google Script integration)
+let currentQuestion = 1;
+const maxQuestions = 5;
+
+function begin() {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const role = document.getElementById("role").value.trim();
+
+  if (!name || !email || !role) {
+    alert("Please complete all fields.");
+    return;
+  }
+
+  currentQuestion = 1;
+  updateProgress();
+  document.getElementById("question").innerText = "Question " + currentQuestion;
+  document.getElementById("name").style.display = "none";
+  document.getElementById("email").style.display = "none";
+  document.getElementById("role").style.display = "none";
+  document.getElementById("startBtn").style.display = "none";
+  document.getElementById("interview").style.display = "block";
+
+  resizeIframe();
+}
+
+function submitAnswer() {
+  const answer = document.getElementById("answer").value.trim();
+  if (!answer) {
+    alert("Please type your answer.");
+    return;
+  }
+
+  currentQuestion++;
+  updateProgress();
+  document.getElementById("answer").value = "";
+  document.getElementById("question").innerText =
+    currentQuestion <= maxQuestions ? "Question " + currentQuestion : "All done!";
+  if (currentQuestion > maxQuestions) {
+    document.getElementById("nextBtn").style.display = "none";
+  }
+
+  resizeIframe();
+}
+
+function finish() {
+  document.getElementById("question").innerText =
+    "Thank you. Your interview has been submitted successfully.";
+  document.getElementById("answer").style.display = "none";
+}
+
+function updateProgress() {
+  document.getElementById("progress").innerText =
+    "Question " + currentQuestion + " of " + maxQuestions;
+}
+
+window.addEventListener("load", resizeIframe);
+window.addEventListener("resize", resizeIframe);
+</script>
+</body>
+</html>
+
+
+
+window.addEventListener("load", resizeIframe);
+window.addEventListener("resize", resizeIframe);
+</script>
 </body>
 </html>
